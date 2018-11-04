@@ -1,0 +1,10 @@
+**/gradle
+**/.idea
+**/.gradle
+gradlew
+local.properties
+settings.gradle
+build.gradle
+gradle.properties
+gradlew.bat
+StudentApp.iml
