@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Mapa.OnFragmentInteractionListener, ListaAmigos.OnFragmentInteractionListener, CodigoBarras.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Mapa.OnFragmentInteractionListener, ListaAmigos.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity
             haySeleccion = true;
             haySeleccion2= false;
         }else if (id == R.id.nav_camera) {
-            seleccionado = new CodigoBarras();
-            haySeleccion= true;
-            haySeleccion2= false;
+            seleccionado2 = new Intent(this, CodigoBarras.class);
+            haySeleccion= false;
+            haySeleccion2= true;
         } else if (id == R.id.nav_linkedin) {
             seleccionado2 = new Intent(this, LoginLinkedIn.class);
             haySeleccion = false;
