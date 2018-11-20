@@ -1,8 +1,12 @@
 package com.example.juan.driverapp;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Mapa.OnFragmentInteractionListener, ListaAmigos.OnFragmentInteractionListener, CodigoBarras.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +27,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -67,7 +63,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_viaje1) {
+            return true;
+        }else if (id == R.id.action_viaje2) {
             return true;
         }
 
@@ -80,22 +78,45 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        Fragment seleccionado = new Mapa();
+        Intent seleccionado2 = null;
+        Boolean haySeleccion= true;
+        Boolean haySeleccion2= false;
 
-        } else if (id == R.id.nav_slideshow) {
-
+        if (id == R.id.nav_inicio) {
+            seleccionado = new Mapa();
+            haySeleccion = true;
+            haySeleccion2= false;
+        }else if (id == R.id.nav_camera) {
+            seleccionado = new CodigoBarras();
+            haySeleccion= true;
+            haySeleccion2= false;
+        } else if (id == R.id.nav_linkedin) {
+            seleccionado2 = new Intent(this, LoginLinkedIn.class);
+            haySeleccion = false;
+            haySeleccion2= true;
         } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            seleccionado = new Configuracion();
+            haySeleccion = true;
+            haySeleccion2= false;
+        } else if (id == R.id.nav_amigos) {
+            seleccionado = new ListaAmigos();
+            haySeleccion = true;
+            haySeleccion2= false;
+        }
+        if(haySeleccion){
+            getSupportFragmentManager().beginTransaction().replace(R.id.Panel, seleccionado).commit();
+        } else if(haySeleccion2){
+            startActivity(seleccionado2);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

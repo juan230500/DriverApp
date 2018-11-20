@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_viaje1"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Viaje sin Desvios"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_viaje2"
+        android:orderInCategory="100"
+        android:title="Viaje con Amigos"
         app:showAsAction="never" />
 </menu>
