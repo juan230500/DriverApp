@@ -4,15 +4,332 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:minHeight="159dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="83dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/tec1" />
+
+    <TableLayout
+        android:layout_width="367dp"
+        android:layout_height="428dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton4">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:paddingBottom="25dp">
+
+            <Button
+                android:id="@+id/button36"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa1"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button41"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa2"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button37"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa3"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button38"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa4"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button39"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa5"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button40"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa6"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="25dp">
+
+            <Button
+                android:id="@+id/button42"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa7"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button18"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa8"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button17"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa9"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button16"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa10"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button15"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa11"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button12"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa12"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="25dp">
+
+            <Button
+                android:id="@+id/button43"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa13"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button19"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa14"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button21"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/house1"
+                android:text="Casa15"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button22"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa16"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button23"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa17"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button20"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa18"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="25dp"
+
+            >
+
+            <Button
+                android:id="@+id/button44"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa19"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button24"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa20"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button25"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa21"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button26"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa22"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button27"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa23"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button28"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa24"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="25dp">
+
+            <Button
+                android:id="@+id/button45"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa25"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button29"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/house1"
+                android:text="Casa26"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button30"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa27"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button31"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa28"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button32"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa29"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <Button
+                android:id="@+id/button33"
+                android:layout_width="60dp"
+                android:layout_height="53dp"
+                android:background="@mipmap/house1"
+                android:text="Casa30"
+                tools:layout_editor_absoluteX="49dp"
+                tools:layout_editor_absoluteY="28dp"
+
+                />
+        </TableRow>
+    </TableLayout>
 
 </android.support.constraint.ConstraintLayout>
