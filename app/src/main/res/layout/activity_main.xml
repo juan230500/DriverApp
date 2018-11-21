@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@mipmap/tec1" />
@@ -40,7 +40,7 @@
                 android:background="@mipmap/house1"
                 android:text="1"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -51,7 +51,7 @@
                 android:background="@mipmap/house1"
                 android:text="2"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -62,7 +62,7 @@
                 android:background="@mipmap/house1"
                 android:text="3"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -73,7 +73,7 @@
                 android:background="@mipmap/house1"
                 android:text="4"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -84,7 +84,7 @@
                 android:background="@mipmap/house1"
                 android:text="5"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -95,7 +95,7 @@
                 android:background="@mipmap/house1"
                 android:text="6"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
         </TableRow>
@@ -112,7 +112,7 @@
                 android:background="@mipmap/house1"
                 android:text="7"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -123,7 +123,7 @@
                 android:background="@mipmap/house1"
                 android:text="8"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -134,7 +134,7 @@
                 android:background="@mipmap/house1"
                 android:text="9"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -145,7 +145,7 @@
                 android:background="@mipmap/house1"
                 android:text="10"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -156,7 +156,7 @@
                 android:background="@mipmap/house1"
                 android:text="11"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -167,7 +167,7 @@
                 android:background="@mipmap/house1"
                 android:text="12"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
         </TableRow>
@@ -184,7 +184,7 @@
                 android:background="@mipmap/house1"
                 android:text="13"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -195,7 +195,7 @@
                 android:background="@mipmap/house1"
                 android:text="14"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -206,7 +206,7 @@
                 android:background="@mipmap/house1"
                 android:text="15"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -217,7 +217,7 @@
                 android:background="@mipmap/house1"
                 android:text="16"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -228,7 +228,7 @@
                 android:background="@mipmap/house1"
                 android:text="17"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -239,7 +239,7 @@
                 android:background="@mipmap/house1"
                 android:text="18"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
         </TableRow>
@@ -258,7 +258,7 @@
                 android:background="@mipmap/house1"
                 android:text="19"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -269,7 +269,7 @@
                 android:background="@mipmap/house1"
                 android:text="20"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -280,7 +280,7 @@
                 android:background="@mipmap/house1"
                 android:text="21"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -291,7 +291,7 @@
                 android:background="@mipmap/house1"
                 android:text="22"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -302,7 +302,7 @@
                 android:background="@mipmap/house1"
                 android:text="23"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -313,7 +313,7 @@
                 android:background="@mipmap/house1"
                 android:text="24"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
         </TableRow>
@@ -330,7 +330,7 @@
                 android:background="@mipmap/house1"
                 android:text="25"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -341,7 +341,7 @@
                 android:background="@mipmap/house1"
                 android:text="26"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -352,7 +352,7 @@
                 android:background="@mipmap/house1"
                 android:text="27"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -363,7 +363,7 @@
                 android:background="@mipmap/house1"
                 android:text="28"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -374,7 +374,7 @@
                 android:background="@mipmap/house1"
                 android:text="29"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
 
@@ -385,7 +385,7 @@
                 android:background="@mipmap/house1"
                 android:text="30"
                 android:textAlignment="gravity"
-                android:textSize="24sp"
+                android:textSize="18sp"
 
                 tools:layout_editor_absoluteX="49dp"
                 tools:layout_editor_absoluteY="28dp" />
@@ -395,15 +395,16 @@
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:onClick="SentGPS"
         android:text="Iniciar Viaje"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/editText"
@@ -420,5 +421,17 @@
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="125dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Conexiones"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editText" />
 
 </android.support.constraint.ConstraintLayout>
