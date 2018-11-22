@@ -9,6 +9,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,7 +53,7 @@ public class Mapa extends AppCompatActivity {
                         // response
                         Gson gson=new Gson();
                         Mapa=gson.fromJson(response,int[][].class);
-                        Toast.makeText(MainActivity.this,
+                        Toast.makeText(Mapa.this,
                                 "Sent "+response, Toast.LENGTH_LONG).show();
                     }
                 },
@@ -49,7 +61,7 @@ public class Mapa extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this,
+                        Toast.makeText(Mapa.this,
                                 "Sent "+error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -61,7 +73,7 @@ public class Mapa extends AppCompatActivity {
 
 
     public void SentGPS(View view){
-        Toast.makeText(MainActivity.this,
+        Toast.makeText(Mapa.this,
                 "Sent "+entrada.getText(), Toast.LENGTH_LONG).show();
 
         String REST_URI  = "http://192.168.100.4:8080/ServidorTEC/webapi/myresource/Residencia";
@@ -76,7 +88,7 @@ public class Mapa extends AppCompatActivity {
                         // response
                         Gson gson=new Gson();
                         Mapa=gson.fromJson(response,int[][].class);
-                        Toast.makeText(MainActivity.this,
+                        Toast.makeText(Mapa.this,
                                 "Sent "+response, Toast.LENGTH_LONG).show();
                     }
                 },
@@ -84,7 +96,7 @@ public class Mapa extends AppCompatActivity {
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this,
+                        Toast.makeText(Mapa.this,
                                 "Sent "+error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
