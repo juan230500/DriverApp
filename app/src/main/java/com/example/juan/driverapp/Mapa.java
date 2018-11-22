@@ -1,108 +1,227 @@
 package com.example.juan.driverapp;
 
-import android.content.Context;
-import android.net.Uri;
+import android.media.Image;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import java.util.HashMap;
+import java.util.Map;
+public class Mapa extends AppCompatActivity {
+    private EditText entrada;
+    private Button Button0;
+    private Button Button1;
+    private Button Button2;
+    private Button Button3;
+    private Button Button4;
+    private Button Button5;
+    private Button Button6;
+    private Button Button7;
+    private Button Button8;
+    private Button Button9;
+    private Button Button10;
+    private Button Button11;
+    private Button Button12;
+    private Button Button13;
+    private Button Button14;
+    private Button Button15;
+    private Button Button16;
+    private Button Button17;
+    private Button Button18;
+    private Button Button19;
+    private Button Button20;
+    private Button Button21;
+    private Button Button22;
+    private Button Button23;
+    private Button Button24;
+    private Button Button25;
+    private Button Button26;
+    private Button Button27;
+    private Button Button28;
+    private Button Button29;
+    private Button Button30;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Mapa.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Mapa#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Mapa extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public Mapa() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Mapa.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Mapa newInstance(String param1, String param2) {
-        Mapa fragment = new Mapa();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    private int[][] Mapa;
+    private String Matriz="";
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.activity_main);
+        entrada=(EditText)findViewById(R.id.editText);
+        /*Button0=(Button)findViewById(R.id.button0);
+        Button1=(Button)findViewById(R.id.button1);
+        Button2=(Button)findViewById(R.id.button2);
+        Button3=(Button)findViewById(R.id.button3);
+        Button4=(Button)findViewById(R.id.button4);
+        Button5=(Button)findViewById(R.id.button5);
+        Button6=(Button)findViewById(R.id.button6);
+        Button7=(Button)findViewById(R.id.button7);
+        Button8=(Button)findViewById(R.id.button8);
+        Button9=(Button)findViewById(R.id.button9);
+        Button10=(Button)findViewById(R.id.button10);
+        Button11=(Button)findViewById(R.id.button11);
+        Button12=(Button)findViewById(R.id.button12);
+        Button13=(Button)findViewById(R.id.button13);
+        Button14=(Button)findViewById(R.id.button14);
+        Button15=(Button)findViewById(R.id.button15);
+        Button16=(Button)findViewById(R.id.button16);
+        Button17=(Button)findViewById(R.id.button17);
+        Button18=(Button)findViewById(R.id.button18);
+        Button19=(Button)findViewById(R.id.button19);
+        Button20=(Button)findViewById(R.id.button20);
+        Button21=(Button)findViewById(R.id.button21);
+        Button22=(Button)findViewById(R.id.button22);
+        Button23=(Button)findViewById(R.id.button23);
+        Button24=(Button)findViewById(R.id.button24);
+        Button25=(Button)findViewById(R.id.button25);
+        Button26=(Button)findViewById(R.id.button26);
+        Button27=(Button)findViewById(R.id.button27);
+        Button28=(Button)findViewById(R.id.button28);
+        Button29=(Button)findViewById(R.id.button29);
+        Button30=(Button)findViewById(R.id.button30);*/
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mapa, container, false);
+        String REST_URI  = "http://192.168.100.22:8080/ServidorTEC/webapi/myresource/Mapa";
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Gson gson=new Gson();
+                        Mapa=gson.fromJson(response,int[][].class);
+                        Matriz=response;
+                        Toast.makeText(Mapa.this,
+                                "Sent "+response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Mapa.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        requestQueue.add(stringRequest);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+    /*
+    1.Registrar residencia
+    2.Toast con caminos por el mapa
+    3.arrays con xy de los nodos
+    4.Bitacora XD
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public void giveMeConexiones(View view){
+        int  response=Mapa[1][1];
+        if (!entrada.getText().equals("")){
+            String valor=entrada.getText().toString();
+            int nodo_a_Verificar=Integer.parseInt(valor);
+            String resultado="";
+            int Fila=30;
+            while (Fila!=0){
+                if (Mapa[Fila][nodo_a_Verificar]!=0){
+                    resultado+="=>"+Fila+"("+Mapa[Fila][nodo_a_Verificar]+")\n";
+                }
+                Fila-=1;
+            }
+            Toast.makeText(Mapa.this,
+                    resultado, Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            Toast.makeText(Mapa.this,
+                    "Porfa llene el espacio de texto", Toast.LENGTH_LONG).show();
+        }
     }
+
+    public void SentGPS(View view){
+        Button0=(Button)findViewById(R.id.button0);
+        Button1=(Button)findViewById(R.id.button1);
+        Button2=(Button)findViewById(R.id.button2);
+        Button3=(Button)findViewById(R.id.button3);
+        Button4=(Button)findViewById(R.id.button4);
+        Button5=(Button)findViewById(R.id.button5);
+        Button6=(Button)findViewById(R.id.button6);
+        Button7=(Button)findViewById(R.id.button7);
+        Button8=(Button)findViewById(R.id.button8);
+        Button9=(Button)findViewById(R.id.button9);
+        Button10=(Button)findViewById(R.id.button10);
+        Button11=(Button)findViewById(R.id.button11);
+        Button12=(Button)findViewById(R.id.button12);
+        Button13=(Button)findViewById(R.id.button13);
+        Button14=(Button)findViewById(R.id.button14);
+        Button15=(Button)findViewById(R.id.button15);
+        Button16=(Button)findViewById(R.id.button16);
+        Button17=(Button)findViewById(R.id.button17);
+        Button18=(Button)findViewById(R.id.button18);
+        Button19=(Button)findViewById(R.id.button19);
+        Button20=(Button)findViewById(R.id.button20);
+        Button21=(Button)findViewById(R.id.button21);
+        Button22=(Button)findViewById(R.id.button22);
+        Button23=(Button)findViewById(R.id.button23);
+        Button24=(Button)findViewById(R.id.button24);
+        Button25=(Button)findViewById(R.id.button25);
+        Button26=(Button)findViewById(R.id.button26);
+        Button27=(Button)findViewById(R.id.button27);
+        Button28=(Button)findViewById(R.id.button28);
+        Button29=(Button)findViewById(R.id.button29);
+        Button30=(Button)findViewById(R.id.button30);
+        final Button[] B={Button0,Button1,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9,
+                Button10,Button11,Button12,Button13,Button14,Button15,Button16,Button17,Button18,
+                Button19,Button20,Button21,Button22,Button23,Button24,Button25,Button26,Button27,
+                Button28,Button29,Button30};
+        Toast.makeText(Mapa.this,
+                "hola"+B[2].getX(), Toast.LENGTH_LONG).show();
+
+        String REST_URI  = "http://192.168.100.22:8080/ServidorTEC/webapi/myresource/Residencia";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Gson gson=new Gson();
+                        Mapa=gson.fromJson(response,int[][].class);
+                        Toast.makeText(Mapa.this,
+                                "Sent "+response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Mapa.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Residencia", ""+entrada.getText());
+                params.put("Carne","2018135360");
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+
+    }
+
 }
