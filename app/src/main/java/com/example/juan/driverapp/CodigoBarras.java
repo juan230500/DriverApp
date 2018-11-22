@@ -12,12 +12,21 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -25,6 +34,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     private String codigoBarras;
     private ZXingScannerView scannerView;
     private int codigoPermiso = 1;
+    private boolean repetido = false;
 
 
     public void Escanear(View view) {
@@ -92,8 +102,9 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                     .setPositiveButton("Correcto", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            archivar();
+                            Toast.makeText(CodigoBarras.this, "Amigo agregado!", Toast.LENGTH_LONG).show();
                             dialog.dismiss();
+                            registrar();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -127,24 +138,28 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                 String linea = br.readLine();
                 String lista_completa = "";
 
-                if (linea.equals(codigoBarras)){
-                    new AlertDialog.Builder(this)
-                            .setTitle("Este amigo ya ha sido agregado antes, pruebe con otro")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            }).create().show();
-                } else {
 
-                    while (linea != null) {
-                        lista_completa = lista_completa + linea + "\n";
-                        linea = br.readLine();
+
+                while ((linea != null) && !repetido) {
+                    lista_completa = lista_completa + linea + "\n";
+                    linea = br.readLine();
+                    try {
+                        if (linea.equals(codigoBarras) || linea == null) {
+                            repetido = true;
+                            new AlertDialog.Builder(CodigoBarras.this)
+                                    .setTitle("Este amigo ya ha sido agregado antes, pruebe con otro")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).create().show();
+                        }
+                    } catch (NullPointerException e) {
+                        br.close();
+                        archivo_rd.close();
+                        guardar(lista_completa);
                     }
-                    br.close();
-                    archivo_rd.close();
-                    guardar(lista_completa);
                 }
 
             } catch (IOException e){
@@ -159,6 +174,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     public void guardar(String codigos){
         Toast.makeText(this, "aqui", Toast.LENGTH_LONG);
         if (codigoBarras.length() == 10){
+            registrar();
             String codigos_nuevo = codigos + codigoBarras + "\n";
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Amigos");
@@ -174,7 +190,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
             } catch (IOException e){
 
             }
-            Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
         } else {
             Toast.makeText(this, "Error al agregar amigo", Toast.LENGTH_LONG);
         }
@@ -188,5 +204,41 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
             }
         }
         return false;
+    }
+
+    public void registrar(){
+        Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
+        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Carne";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(CodigoBarras.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Carne", "" + codigoBarras);
+
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 }

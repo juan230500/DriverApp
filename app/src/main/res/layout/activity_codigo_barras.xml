@@ -16,7 +16,7 @@
         android:layout_height="126dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="3dp"
         android:text="Para agragar amigos debe escanear el código de barras que se encuentra detrás del carné de su amigo"
         android:textColor="#cccccc"
         android:textSize="25sp"
