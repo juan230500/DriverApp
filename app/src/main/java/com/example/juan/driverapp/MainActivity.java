@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Mapa.OnFragmentInteractionListener, ListaAmigos.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ListaAmigos.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,15 +78,15 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment seleccionado = new Mapa();
+        Fragment seleccionado = null;
         Intent seleccionado2 = null;
         Boolean haySeleccion= true;
         Boolean haySeleccion2= false;
 
         if (id == R.id.nav_inicio) {
-            seleccionado = new Mapa();
-            haySeleccion = true;
-            haySeleccion2= false;
+            seleccionado2 = new Intent(this, Mapa.class);
+            haySeleccion= false;
+            haySeleccion2= true;
         }else if (id == R.id.nav_camera) {
             seleccionado2 = new Intent(this, CodigoBarras.class);
             haySeleccion= false;
