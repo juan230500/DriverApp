@@ -4,11 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,32 +18,41 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 import com.google.zxing.Result;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class RegistrarCarne extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+
     private String codigoBarras;
-    private String conductorCarne;
     private ZXingScannerView scannerView;
     private int codigoPermiso = 1;
-    private boolean repetido = false;
+    private boolean registrado = false;
 
 
     public void Escanear(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            this.scannerView = new ZXingScannerView(this);
-            setContentView(this.scannerView);
-            scannerView.setResultHandler(this);
-            scannerView.startCamera();
+            if (!registrado) {
+                this.scannerView = new ZXingScannerView(this);
+                setContentView(this.scannerView);
+                scannerView.setResultHandler(this);
+                scannerView.startCamera();
+                registrado = true;
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle("Ya está registrado")
+                        .setMessage("El carné " + codigoBarras + " ya ha sido registrado")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
+            }
         } else {
             pedirPermiso();
         }
@@ -59,7 +68,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(CodigoBarras.this, new String[]{Manifest.permission.CAMERA}, codigoPermiso);
+                            ActivityCompat.requestPermissions(RegistrarCarne.this, new String[]{Manifest.permission.CAMERA}, codigoPermiso);
                         }
                     })
                     .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -69,8 +78,6 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                         }
                     })
                     .create().show();
-
-
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, codigoPermiso);
         }
@@ -79,9 +86,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_codigo_barras);
-        abrir();
     }
-
 
     public void handleResult(Result result) {
         scannerView.stopCamera();
@@ -99,21 +104,20 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
         } else {
             this.codigoBarras = result.getText();
             new AlertDialog.Builder(this)
-                    .setTitle("El carné de su amigo es")
+                    .setTitle("Su carné es")
                     .setMessage(this.codigoBarras)
                     .setPositiveButton("Correcto", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(CodigoBarras.this, "Amigo agregado!", Toast.LENGTH_LONG).show();
+                            guardar();
                             dialog.dismiss();
-                            registrar();
                         }
                     })
                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            new AlertDialog.Builder(CodigoBarras.this)
+                            new AlertDialog.Builder(RegistrarCarne.this)
                                     .setTitle("Vuelva a intentarlo")
                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                         @Override
@@ -127,20 +131,20 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
-    public void abrir(){
-        String archivos []  = fileList();
+    public void guardar(){
+        registrar();
+        Toast.makeText(this, "Se ha registrado el carné!", Toast.LENGTH_SHORT).show();
         try {
-            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
-            BufferedReader br = new BufferedReader(archivo_rd);
-            conductorCarne = br.readLine();
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("micarne.txt", Activity.MODE_PRIVATE));
+            archivo_wr.write(codigoBarras);
+            archivo_wr.flush();
+            archivo_wr.close();
         } catch (IOException e){}
     }
 
-
-
     public void registrar(){
         Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
-        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/NuevoAmigo";
+        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Carne";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 
@@ -156,7 +160,7 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                 {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(CodigoBarras.this,
+                        Toast.makeText(RegistrarCarne.this,
                                 "Sent "+error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
@@ -165,8 +169,8 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Conductor", "" + conductorCarne);
-                params.put("Amigo", "" + codigoBarras);
+                params.put("Carne", "" + codigoBarras);
+
 
                 return params;
             }

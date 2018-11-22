@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity
             seleccionado2 = new Intent(this, LoginLinkedIn.class);
             haySeleccion = false;
             haySeleccion2= true;
+        } else if (id == R.id.nav_carne) {
+            seleccionado2 = new Intent(this, RegistrarCarne.class);
+            haySeleccion = false;
+            haySeleccion2= true;
         } else if (id == R.id.nav_manage) {
             seleccionado = new Configuracion();
             haySeleccion = true;

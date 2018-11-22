@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_linkedin"
             android:title="Registrarse (LinkedIn)" />
         <item
+            android:id="@+id/nav_carne"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Registrarse (Carné)" />
+        <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
             android:title="Agregar amigos" />
