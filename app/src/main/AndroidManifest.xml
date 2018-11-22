@@ -30,11 +30,13 @@
             android:name=".LoginLinkedIn"
             android:label="@string/title_activity_login_linked_in" />
         <activity android:name=".CodigoBarras" />
-        <activity android:name=".RegistrarCarne"></activity>
-        <activity android:name=".Mapa"
+        <activity android:name=".RegistrarCarne" />
+        <activity
+            android:name=".Mapa"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"></activity>
-
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Main2Activity">
+        </activity>
     </application>
 
 </manifest>
