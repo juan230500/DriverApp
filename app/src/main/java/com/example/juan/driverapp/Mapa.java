@@ -22,15 +22,6 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Mapa.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Mapa#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Mapa extends AppCompatActivity {
     private EditText entrada;
     private int[][] Mapa;
