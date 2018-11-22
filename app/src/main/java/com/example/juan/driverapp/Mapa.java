@@ -57,7 +57,7 @@ public class Mapa extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_mapa);
         entrada=(EditText)findViewById(R.id.editText);
         /*Button0=(Button)findViewById(R.id.button0);
         Button1=(Button)findViewById(R.id.button1);
@@ -91,7 +91,7 @@ public class Mapa extends AppCompatActivity {
         Button29=(Button)findViewById(R.id.button29);
         Button30=(Button)findViewById(R.id.button30);*/
 
-        String REST_URI  = "http://192.168.100.22:8080/ServidorTEC/webapi/myresource/Mapa";
+        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
                 new Response.Listener<String>()
@@ -185,7 +185,7 @@ public class Mapa extends AppCompatActivity {
         Toast.makeText(Mapa.this,
                 "hola"+B[2].getX(), Toast.LENGTH_LONG).show();
 
-        String REST_URI  = "http://192.168.100.22:8080/ServidorTEC/webapi/myresource/Residencia";
+        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Residencia";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 
