@@ -1,5 +1,6 @@
 package com.example.juan.driverapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,8 +23,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Configuracion.OnFragmentInteractionListener {
+
+    private String viaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +130,28 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void guardar(int viaje){
+        Toast.makeText(this, "Se ha registrado el carné!", Toast.LENGTH_SHORT).show();
+        try {
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
+            if (viaje == 1) {
+                archivo_wr.write("Viaje con amigos");
+            } else {
+                archivo_wr.write("Viaje sin desvios");
+            }
+            archivo_wr.flush();
+            archivo_wr.close();
+        } catch (IOException e){}
+    }
+
+    public void abrir(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("miviaje.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            viaje = br.readLine();
+        } catch (IOException e){}
     }
 
     @Override

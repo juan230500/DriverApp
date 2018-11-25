@@ -15,6 +15,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 public class Mapa extends AppCompatActivity {
@@ -51,6 +55,7 @@ public class Mapa extends AppCompatActivity {
     private Button Button29;
     private Button Button30;
 
+    private  String viaje;
 
     private int[][] Mapa;
     private String Matriz="";
@@ -222,6 +227,14 @@ public class Mapa extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
 
+    }
+
+    public void abrir(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("miviaje.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            viaje = br.readLine();
+        } catch (IOException e){}
     }
 
 }
