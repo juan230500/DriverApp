@@ -144,7 +144,7 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
 
     public void registrar(){
         Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
-        String REST_URI  = "http://192.168.100.13:8080/ServidorTEC/webapi/myresource/Carne";
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Carne";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 

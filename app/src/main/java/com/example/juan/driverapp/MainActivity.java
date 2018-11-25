@@ -52,6 +52,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
+            archivo_wr.write("20");
+            archivo_wr.flush();
+            archivo_wr.close();
+        } catch (IOException e){}
+    }
+
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -132,15 +143,20 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void guardar(int viaje){
-        Toast.makeText(this, "Se ha registrado el carné!", Toast.LENGTH_SHORT).show();
+    public void guardarSD(View view){
+        Toast.makeText(this, "Ha seleccionado viaje sin desvíos.", Toast.LENGTH_SHORT).show();
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
-            if (viaje == 1) {
-                archivo_wr.write("Viaje con amigos");
-            } else {
-                archivo_wr.write("Viaje sin desvios");
-            }
+            archivo_wr.write("0");
+            archivo_wr.flush();
+            archivo_wr.close();
+        } catch (IOException e){}
+    }
+    public void guardarAmigos(View view){
+        Toast.makeText(this, "Ha seleccionado viaje con amigos.", Toast.LENGTH_SHORT).show();
+        try {
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
+            archivo_wr.write("1");
             archivo_wr.flush();
             archivo_wr.close();
         } catch (IOException e){}

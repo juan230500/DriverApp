@@ -1,6 +1,9 @@
 package com.example.juan.driverapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.media.Image;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 public class Mapa extends AppCompatActivity {
@@ -56,9 +60,14 @@ public class Mapa extends AppCompatActivity {
     private Button Button30;
 
     private  String viaje;
+    private String conductorCarne;
 
     private int[][] Mapa;
     private String Matriz="";
+
+    private boolean registrado;
+    private boolean viajar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,32 +104,54 @@ public class Mapa extends AppCompatActivity {
         Button28=(Button)findViewById(R.id.button28);
         Button29=(Button)findViewById(R.id.button29);
         Button30=(Button)findViewById(R.id.button30);*/
-
-        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Mapa";
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        Gson gson=new Gson();
-                        Mapa=gson.fromJson(response,int[][].class);
-                        Matriz=response;
-                        Toast.makeText(Mapa.this,
-                                "Sent "+response, Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Mapa.this,
-                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-        requestQueue.add(stringRequest);
+
+        abrirCarne();
+        if (registrado == false){
+            finish();
+            startActivity(new Intent(this, RegistrarCarne.class));
+        }else {
+            abrirViaje();
+            if (viajar == false) {
+                finish();
+            }else{
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
+                        new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response) {
+                                // response
+                                Gson gson=new Gson();
+                                Mapa=gson.fromJson(response,int[][].class);
+                                Matriz=response;
+                                Toast.makeText(Mapa.this,
+                                        "Sent "+response, Toast.LENGTH_LONG).show();
+                            }
+                        },
+                        new Response.ErrorListener()
+                        {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(Mapa.this,
+                                        "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                );
+                requestQueue.add(stringRequest);
+            }
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
+            archivo_wr.write("20");
+            archivo_wr.flush();
+            archivo_wr.close();
+            viajar=false;
+        } catch (IOException e){}
     }
     /*
     1.Registrar residencia
@@ -190,7 +221,7 @@ public class Mapa extends AppCompatActivity {
         Toast.makeText(Mapa.this,
                 "hola"+B[2].getX(), Toast.LENGTH_LONG).show();
 
-        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Residencia";
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Residencia";
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 
@@ -220,7 +251,7 @@ public class Mapa extends AppCompatActivity {
             {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Residencia", ""+entrada.getText());
-                params.put("Carne","2018135360");
+                params.put("Carne",conductorCarne);
 
                 return params;
             }
@@ -229,12 +260,41 @@ public class Mapa extends AppCompatActivity {
 
     }
 
-    public void abrir(){
+    public void abrirViaje(){
         try {
             InputStreamReader archivo_rd = new InputStreamReader(openFileInput("miviaje.txt"));
             BufferedReader br = new BufferedReader(archivo_rd);
             viaje = br.readLine();
         } catch (IOException e){}
+        System.out.println(viaje.length());
+        if (viaje.equals("20")) {
+            viajar=false;
+            Toast.makeText(Mapa.this,
+                    "Debe seleccionar la forma de viaje antes de continuar.", Toast.LENGTH_LONG).show();
+        }
+        else{
+            viajar=true;
+            Toast.makeText(Mapa.this,
+                    "Viaje escogido: " + viaje, Toast.LENGTH_LONG).show();
+        }
+    }
+    public void abrirCarne(){
+        String archivos []  = fileList();
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            conductorCarne = br.readLine();
+        } catch (IOException e){}
+        if (conductorCarne!=null) {
+            registrado= true;
+            Toast.makeText(Mapa.this,
+                    "Carnet del conductor: " + conductorCarne, Toast.LENGTH_LONG).show();
+        }
+        else {
+            registrado= false;
+            Toast.makeText(Mapa.this,
+                    "Es necesario que registre su carnet para continuar." , Toast.LENGTH_LONG).show();
+        }
     }
 
 }
