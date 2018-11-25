@@ -25,6 +25,7 @@ public class Calificar extends AppCompatActivity {
 
     private ArrayList<String> Pasajeros;
     private RatingBar calificacion;
+    private boolean califico = false;
     private String carne;
     private int i;
 
@@ -38,12 +39,17 @@ public class Calificar extends AppCompatActivity {
 
 
     public void enviarCalificacion(View view) {
-        Toast toast1 =
-                Toast.makeText(getApplicationContext(),
-                        "la puntuacion a enviar es de  " + calificacion.getRating(), Toast.LENGTH_SHORT);
-        toast1.show();
-        i = Pasajeros.size();
-        enviar();
+        if (!califico) {
+            Toast toast1 =
+                    Toast.makeText(getApplicationContext(),
+                            "la puntuacion a enviar es de  " + calificacion.getRating(), Toast.LENGTH_SHORT);
+            toast1.show();
+            i = Pasajeros.size();
+            enviar();
+        } else {
+            Toast.makeText(this, "Ya se ha calificado el viaje", Toast.LENGTH_LONG).show();
+            return;
+        }
 
     }
 
