@@ -66,7 +66,7 @@ public class Asientos extends AppCompatActivity {
         Toast.makeText(this, "Asientos disponibles: ", Toast.LENGTH_LONG).show();
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("misasientos.txt", Activity.MODE_PRIVATE));
-            archivo_wr.write(cantAsientos);
+            archivo_wr.write(cantAsientos+"");
             archivo_wr.flush();
             archivo_wr.close();
         } catch (IOException e){}

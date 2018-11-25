@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    
+
 
     public void guardarSD(View view){
         Toast.makeText(this, "Ha seleccionado viaje sin desvíos.", Toast.LENGTH_SHORT).show();

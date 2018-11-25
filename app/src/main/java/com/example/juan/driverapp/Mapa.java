@@ -64,8 +64,10 @@ public class Mapa extends AppCompatActivity {
     private Button Button29;
     private Button Button30;
 
-    private  String viaje;
+    private String viaje;
     private String conductorCarne;
+    private String asientos;
+
 
     private int[][] Mapa;
 
@@ -122,6 +124,7 @@ public class Mapa extends AppCompatActivity {
             startActivity(new Intent(this, RegistrarCarne.class));
         }else {
             abrirViaje();
+            abrirAsientos();
             if (viajar == false) {
                 finish();
             }else{
@@ -234,6 +237,7 @@ public class Mapa extends AppCompatActivity {
             IsSolo="RutaAmigo";
         }
 
+
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/"+IsSolo;
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
@@ -264,7 +268,7 @@ public class Mapa extends AppCompatActivity {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Residencia", ""+entrada.getText());
                 params.put("Carne",conductorCarne);
-                params.put("Asientos","2");
+                params.put("Asientos",asientos);
 
                 return params;
             }
@@ -338,6 +342,15 @@ public class Mapa extends AppCompatActivity {
                     "Viaje escogido: " + viaje, Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void abrirAsientos(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("misasientos.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            asientos = br.readLine();
+        } catch (IOException e){}
+    }
+
     public void abrirCarne(){
         String archivos []  = fileList();
         try {
