@@ -120,6 +120,10 @@ public class MainActivity extends AppCompatActivity
             seleccionado2 = new Intent(this, ListaAmigos.class);
             haySeleccion = false;
             haySeleccion2= true;
+        } else if (id == R.id.nav_top5) {
+            seleccionado2 = new Intent(this, Top5.class);
+            haySeleccion = false;
+            haySeleccion2 = true;
         }
         if(haySeleccion){
             getSupportFragmentManager().beginTransaction().replace(R.id.Panel, seleccionado).commit();
