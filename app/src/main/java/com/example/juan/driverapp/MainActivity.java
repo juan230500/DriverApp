@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Configuracion.OnFragmentInteractionListener {
 
     private String viaje;
+    private String asientos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,9 +143,12 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    
 
     public void guardarSD(View view){
         Toast.makeText(this, "Ha seleccionado viaje sin desvíos.", Toast.LENGTH_SHORT).show();
+        Intent asientos = new Intent(this, Asientos.class);
+        startActivity(asientos);
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
             archivo_wr.write("0");
@@ -154,6 +158,8 @@ public class MainActivity extends AppCompatActivity
     }
     public void guardarAmigos(View view){
         Toast.makeText(this, "Ha seleccionado viaje con amigos.", Toast.LENGTH_SHORT).show();
+        Intent asientos = new Intent(this, Asientos.class);
+        startActivity(asientos);
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("miviaje.txt", Activity.MODE_PRIVATE));
             archivo_wr.write("1");
