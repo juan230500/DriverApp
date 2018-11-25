@@ -35,8 +35,8 @@
             android:name=".Mapa"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Main2Activity">
-        </activity>
+        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".ListaAmigos"></activity>
     </application>
 
 </manifest>

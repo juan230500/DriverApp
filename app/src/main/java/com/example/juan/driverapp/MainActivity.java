@@ -23,7 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ListaAmigos.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Configuracion.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +109,9 @@ public class MainActivity extends AppCompatActivity
             haySeleccion = true;
             haySeleccion2= false;
         } else if (id == R.id.nav_amigos) {
-            seleccionado = new ListaAmigos();
-            haySeleccion = true;
-            haySeleccion2= false;
+            seleccionado2 = new Intent(this, ListaAmigos.class);
+            haySeleccion = false;
+            haySeleccion2= true;
         }
         if(haySeleccion){
             getSupportFragmentManager().beginTransaction().replace(R.id.Panel, seleccionado).commit();
