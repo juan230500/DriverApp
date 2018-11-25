@@ -481,7 +481,7 @@ public class Mapa extends AppCompatActivity {
     public void guardarPasajeros(){
         //Toast.makeText(this, "Pasajeros :" + Pasajeros, Toast.LENGTH_SHORT).show();
         try {
-            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("mipasajeros.txt", Activity.MODE_PRIVATE));
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("mispasajeros.txt", Activity.MODE_PRIVATE));
             for (String p: Pasajeros) {
                 Toast.makeText(this, p, Toast.LENGTH_SHORT).show();
                 archivo_wr.write(p + "\n");

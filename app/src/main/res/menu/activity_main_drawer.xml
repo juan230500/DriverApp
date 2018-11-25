@@ -25,6 +25,10 @@
             android:icon="@drawable/ic_amigos"
             android:title="Lista de amigos"/>
         <item
+            android:id="@+id/nav_calificar"
+            android:icon="@drawable/ic_amigos"
+            android:title="calificar"/>
+        <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
             android:title="Configuración" />

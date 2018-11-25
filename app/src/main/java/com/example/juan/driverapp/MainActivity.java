@@ -173,6 +173,10 @@ public class MainActivity extends AppCompatActivity
             seleccionado = new Configuracion();
             haySeleccion = true;
             haySeleccion2= false;
+        }else if (id == R.id.nav_calificar) {
+            seleccionado2 = new Intent(this, Calificar.class);
+            haySeleccion= false;
+            haySeleccion2= true;
         } else if (id == R.id.nav_amigos) {
             seleccionado2 = new Intent(this, ListaAmigos.class);
             haySeleccion = false;
