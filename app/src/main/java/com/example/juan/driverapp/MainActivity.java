@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.net.Uri;
@@ -23,16 +24,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Configuracion.OnFragmentInteractionListener {
 
     private String viaje;
     private String asientos;
+    private TextView txtv;
+    private String carne;
+    private String ip = "192.168.100.12";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +53,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -50,6 +62,39 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+        String REST_URI  = "http://" + ip + ":8080/ServidorTEC/webapi/myresource/CalificacionPropia";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Double num = (Double.parseDouble(response)) * 0.01;
+                        txtv = (TextView)findViewById(R.id.textViewCalif);
+                        txtv.setText(num.toString());
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Carne", "" + carne);
+
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -179,6 +224,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }public void abrirCarne(){
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            carne = br.readLine();
+        } catch (IOException e){}
     }
 
 }

@@ -8,7 +8,7 @@
     android:background="#424242"
     android:baselineAligned="false"
     android:orientation="vertical"
-    tools:context=".CodigoBarras">
+    tools:context=".RegistrarCarne">
 
     <TextView
         android:id="@+id/textView2"
