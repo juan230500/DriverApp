@@ -246,6 +246,7 @@ public class Mapa extends AppCompatActivity {
                         Toast.makeText(Mapa.this,
                                 response, Toast.LENGTH_LONG).show();
                         parsear(response);
+                        guardarPasajeros();
                     }
                 },
                 new Response.ErrorListener()
@@ -354,6 +355,18 @@ public class Mapa extends AppCompatActivity {
             Toast.makeText(Mapa.this,
                     "Es necesario que registre su carnet para continuar." , Toast.LENGTH_SHORT).show();
         }
+    }
+    public void guardarPasajeros(){
+        //Toast.makeText(this, "Pasajeros :" + Pasajeros, Toast.LENGTH_SHORT).show();
+        try {
+            OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("mipasajeros.txt", Activity.MODE_PRIVATE));
+            for (String p: Pasajeros) {
+                Toast.makeText(this, p, Toast.LENGTH_SHORT).show();
+                archivo_wr.write(p + "\n");
+            }
+            archivo_wr.flush();
+            archivo_wr.close();
+        } catch (IOException e){}
     }
 
 }
