@@ -22,8 +22,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ListaAmigos.OnFragmentInteractionListener, Configuracion.OnFragmentInteractionListener {
+    private String Viaje="";
+    private String Respuesta="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +54,32 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Mapa";
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Gson gson=new Gson();
+                        Viaje=gson.fromJson(response,String.class);
+                        Respuesta=response;
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -128,5 +167,69 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+    public void Viaje1(View view){
+        Toast.makeText(MainActivity.this,
+                "Con Amigos", Toast.LENGTH_LONG).show();
+        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Residencia";
 
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Gson gson=new Gson();
+                        Viaje=gson.fromJson(response,String.class);
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+        };
+        requestQueue.add(stringRequest);
+
+    }
+    public void Viaje2(View view){
+        Toast.makeText(MainActivity.this,
+                "Sin desvios", Toast.LENGTH_LONG).show();
+        String REST_URI  = "http://192.168.100.25:8080/ServidorTEC/webapi/myresource/Residencia";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Gson gson=new Gson();
+                        Viaje=gson.fromJson(response,String.class);
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+        };
+        requestQueue.add(stringRequest);
+
+
+    }
 }

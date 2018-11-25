@@ -5,10 +5,10 @@
         android:id="@+id/action_viaje1"
         android:orderInCategory="100"
         android:title="Viaje sin Desvios"
-        app:showAsAction="never" />
+        android:onClick="Viaje2"/>
     <item
         android:id="@+id/action_viaje2"
         android:orderInCategory="100"
         android:title="Viaje con Amigos"
-        app:showAsAction="never" />
+        android:onClick="Viaje1" />
 </menu>
