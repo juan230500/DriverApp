@@ -18,6 +18,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,10 +68,14 @@ public class Mapa extends AppCompatActivity {
     private String conductorCarne;
 
     private int[][] Mapa;
-    private String Matriz="";
 
     private boolean registrado;
     private boolean viajar;
+
+    private String[] Pasajeros;
+    private String[] PosPasajeros;
+    private int[] Ruta;
+    private int[] Tiempos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,9 +133,8 @@ public class Mapa extends AppCompatActivity {
                                 // response
                                 Gson gson=new Gson();
                                 Mapa=gson.fromJson(response,int[][].class);
-                                Matriz=response;
                                 Toast.makeText(Mapa.this,
-                                        "Sent "+response, Toast.LENGTH_LONG).show();
+                                        "Mapa cargado exitosamente", Toast.LENGTH_SHORT).show();
                             }
                         },
                         new Response.ErrorListener()
@@ -160,7 +168,6 @@ public class Mapa extends AppCompatActivity {
     4.Bitacora XD
      */
     public void giveMeConexiones(View view){
-        int  response=Mapa[1][1];
         if (!entrada.getText().equals("")){
             String valor=entrada.getText().toString();
             int nodo_a_Verificar=Integer.parseInt(valor);
@@ -218,10 +225,16 @@ public class Mapa extends AppCompatActivity {
                 Button10,Button11,Button12,Button13,Button14,Button15,Button16,Button17,Button18,
                 Button19,Button20,Button21,Button22,Button23,Button24,Button25,Button26,Button27,
                 Button28,Button29,Button30};
-        Toast.makeText(Mapa.this,
-                "hola"+B[2].getX(), Toast.LENGTH_LONG).show();
 
-        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Residencia";
+        String IsSolo;
+        if (viaje.equals("0")){
+            IsSolo="RutaSolo";
+        }
+        else{
+            IsSolo="RutaAmigo";
+        }
+
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/"+IsSolo;
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
 
@@ -230,11 +243,9 @@ public class Mapa extends AppCompatActivity {
                 {
                     @Override
                     public void onResponse(String response) {
-                        // response
-                        Gson gson=new Gson();
-                        Mapa=gson.fromJson(response,int[][].class);
                         Toast.makeText(Mapa.this,
-                                "Sent "+response, Toast.LENGTH_LONG).show();
+                                response, Toast.LENGTH_LONG).show();
+                        parsear(response);
                     }
                 },
                 new Response.ErrorListener()
@@ -252,12 +263,60 @@ public class Mapa extends AppCompatActivity {
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Residencia", ""+entrada.getText());
                 params.put("Carne",conductorCarne);
+                params.put("Asientos","2");
 
                 return params;
             }
         };
         requestQueue.add(stringRequest);
 
+    }
+
+    public void parsear(String response){
+        JsonParser parser = new JsonParser();
+        JsonElement rootNode = parser.parse(response);
+
+
+        if (rootNode.isJsonObject()) {
+            JsonObject details = rootNode.getAsJsonObject();
+
+            JsonArray PasajerosDetails = details.getAsJsonArray("Pasajeros");
+
+            Pasajeros=new String[PasajerosDetails.size()];
+            PosPasajeros=new String[PasajerosDetails.size()];
+
+            for (int i = 0; i < PasajerosDetails.size(); i++) {
+                JsonPrimitive value = PasajerosDetails.get(i).getAsJsonPrimitive();
+                Pasajeros[i]=value.getAsString();
+            }
+
+            JsonArray PosPasajerosDetails = details.getAsJsonArray("PosicionesPasajeros");
+
+            for (int i = 0; i < PosPasajerosDetails.size(); i++) {
+                JsonPrimitive value = PosPasajerosDetails.get(i).getAsJsonPrimitive();
+                PosPasajeros[i]=value.getAsString();
+                //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
+            }
+
+            JsonArray RutaDetails = details.getAsJsonArray("Ruta");
+
+            Ruta=new int[RutaDetails.size()];
+            Tiempos=new int[RutaDetails.size()];
+
+            for (int i = 0; i < RutaDetails.size(); i++) {
+                JsonPrimitive value = RutaDetails.get(i).getAsJsonPrimitive();
+                Ruta[i]=value.getAsInt();
+            }
+
+            JsonArray TiemposDetails = details.getAsJsonArray("Tiempos");
+
+            for (int i = 0; i < TiemposDetails.size(); i++) {
+                JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
+                Tiempos[i]=value.getAsInt();
+                //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 
     public void abrirViaje(){
@@ -270,12 +329,12 @@ public class Mapa extends AppCompatActivity {
         if (viaje.equals("20")) {
             viajar=false;
             Toast.makeText(Mapa.this,
-                    "Debe seleccionar la forma de viaje antes de continuar.", Toast.LENGTH_LONG).show();
+                    "Debe seleccionar la forma de viaje antes de continuar.", Toast.LENGTH_SHORT).show();
         }
         else{
             viajar=true;
             Toast.makeText(Mapa.this,
-                    "Viaje escogido: " + viaje, Toast.LENGTH_LONG).show();
+                    "Viaje escogido: " + viaje, Toast.LENGTH_SHORT).show();
         }
     }
     public void abrirCarne(){
@@ -288,12 +347,12 @@ public class Mapa extends AppCompatActivity {
         if (conductorCarne!=null) {
             registrado= true;
             Toast.makeText(Mapa.this,
-                    "Carnet del conductor: " + conductorCarne, Toast.LENGTH_LONG).show();
+                    "Carnet del conductor: " + conductorCarne, Toast.LENGTH_SHORT).show();
         }
         else {
             registrado= false;
             Toast.makeText(Mapa.this,
-                    "Es necesario que registre su carnet para continuar." , Toast.LENGTH_LONG).show();
+                    "Es necesario que registre su carnet para continuar." , Toast.LENGTH_SHORT).show();
         }
     }
 

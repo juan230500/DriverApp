@@ -19,16 +19,19 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ListaAmigos extends AppCompatActivity {
     private LinearLayout contenedor;
-    private String carne = "2018135360";
     private String ip = "192.168.100.12";
     private ArrayList<String> carnes ;
     private ArrayList<String> calif;
+    private String conductorCarne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class ListaAmigos extends AppCompatActivity {
         carnes = new ArrayList<String>();
         calif = new ArrayList<String>();
         getLista();
+        abrir();
 
 
 
@@ -55,6 +59,16 @@ public class ListaAmigos extends AppCompatActivity {
             index ++;
         }
     }
+
+    public void abrir(){
+        String archivos []  = fileList();
+        try {
+            InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
+            BufferedReader br = new BufferedReader(archivo_rd);
+            conductorCarne = br.readLine();
+        } catch (IOException e){}
+    }
+
     public void getLista (){
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
@@ -88,7 +102,7 @@ public class ListaAmigos extends AppCompatActivity {
             protected Map<String, String> getParams()
             {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Carne", "" + carne);
+                params.put("Carne", "" + conductorCarne);
 
                 return params;
             }
