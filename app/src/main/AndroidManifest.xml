@@ -37,7 +37,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".ListaAmigos" />
-        <activity android:name=".Asientos"></activity>
+        <activity android:name=".Asientos" />
+        <activity android:name=".Top5"></activity>
     </application>
 
 </manifest>
