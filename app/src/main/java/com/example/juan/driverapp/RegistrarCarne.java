@@ -85,12 +85,12 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_codigo_barras);
+        setContentView(R.layout.activity_registrar_carne);
     }
 
     public void handleResult(Result result) {
         scannerView.stopCamera();
-        setContentView(R.layout.activity_codigo_barras);
+        setContentView(R.layout.activity_registrar_carne);
         if (result.getText().length() != 10) {
             new AlertDialog.Builder(this)
                     .setTitle("El codigo escaneado no pertenece a un carné TEC")
@@ -136,7 +136,7 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
         Toast.makeText(this, "Se ha registrado el carné!", Toast.LENGTH_SHORT).show();
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("micarne.txt", Activity.MODE_PRIVATE));
-            archivo_wr.write(codigoBarras);
+            archivo_wr.write("2018148940");
             archivo_wr.flush();
             archivo_wr.close();
         } catch (IOException e){}
