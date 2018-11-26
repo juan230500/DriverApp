@@ -255,10 +255,22 @@ public class Mapa extends AppCompatActivity {
                             y=x*m+b;
                             img.setX(x);
                             img.setY(y);
+                            PointF pointA = new PointF(img.getX()+25, img.getY()+25);
+                            PointF pointB = new PointF(xf, yf);
+                            linea=(LineView) findViewById(R.id.lineView);
+                            linea.setPointA(pointA);
+                            linea.setPointB(pointB);
+                            linea.draw();
                             xAcumulada-=2;
                             tv1.setText("ETA= "+(xAcumulada)/ETAfinal);
                         }
                         else{
+                            PointF pointA = new PointF(0, 0);
+                            PointF pointB = new PointF(0, 0);
+                            linea=(LineView) findViewById(R.id.lineView);
+                            linea.setPointA(pointA);
+                            linea.setPointB(pointB);
+                            linea.draw();
                             timer.cancel();
                             timer.purge();
                             timer=new Timer();
