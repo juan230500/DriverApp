@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return false;
     }
 
     @Override
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_viaje1) {
             return true;
         }else if (id == R.id.action_viaje2) {
-            return true;
+            return false;
         }
 
         return super.onOptionsItemSelected(item);
@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity
             seleccionado = new Configuracion();
             haySeleccion = true;
             haySeleccion2= false;
+        }else if (id == R.id.nav_calificar) {
+            seleccionado2 = new Intent(this, Calificar.class);
+            haySeleccion= false;
+            haySeleccion2= true;
         } else if (id == R.id.nav_amigos) {
             seleccionado2 = new Intent(this, ListaAmigos.class);
             haySeleccion = false;
@@ -237,6 +241,42 @@ public class MainActivity extends AppCompatActivity
             BufferedReader br = new BufferedReader(archivo_rd);
             carne = br.readLine();
         } catch (IOException e){}
+    }
+    public void refresh(View view){
+        abrirCarne();
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+        String REST_URI  = "http://" + ip + ":8080/ServidorTEC/webapi/myresource/CalificacionPropia";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Double num = (Double.parseDouble(response)) * 0.01;
+                        txtv = (TextView)findViewById(R.id.textViewCalif);
+                        txtv.setText(num.toString());
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Carne", "" + carne);
+
+                return params;
+            }
+        };
+
+        requestQueue.add(stringRequest);
     }
 
 }
