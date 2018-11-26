@@ -403,10 +403,11 @@ public class Mapa extends AppCompatActivity {
             }
 
             JsonArray TiemposDetails = details.getAsJsonArray("Tiempos");
-
+            ETAfinal=0;
             for (int i = 0; i < TiemposDetails.size(); i++) {
                 JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
                 Tiempos[i]=value.getAsInt();
+                ETAfinal+=Tiempos[i];
                 //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
             }
 
