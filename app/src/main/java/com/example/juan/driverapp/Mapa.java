@@ -260,6 +260,7 @@ public class Mapa extends AppCompatActivity {
     }
     public void request(final int i){
         if (i==Ruta.length){
+            CerrarViaje();
             return;
         }
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/ActualizarViaje";
@@ -434,6 +435,41 @@ public class Mapa extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void CerrarViaje(){
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/CerrarViaje";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(Mapa.this,
+                                "Viaje cerrado "+response, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Mapa.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Carne",conductorCarne);
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     public void abrirViaje(){
