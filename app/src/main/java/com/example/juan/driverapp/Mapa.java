@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -101,12 +102,16 @@ public class Mapa extends AppCompatActivity {
     private String[] PosPasajeros;
     private int[] Ruta;
     private int[] Tiempos;
+    private float xAcumulada;
+    private float ETAfinal;
+    private TextView tv1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_mapa);
 
+        tv1=findViewById(R.id.ETA);
         entrada=(EditText)findViewById(R.id.editText);
         img=(Button)findViewById(R.id.buttonCarro);
         Button0=(Button)findViewById(R.id.button0);
@@ -238,7 +243,6 @@ public class Mapa extends AppCompatActivity {
         double hipo=Math.sqrt((x-xf)*(x-xf)+(y-yf)*(y-yf));
         int t=Tiempos[i-1]*1000;
         int velocidad= (int) ((2*t)/hipo);
-
         //https://www.youtube.com/watch?v=UxbJKNjQWD8
         timer.schedule(new TimerTask() {
             @Override
@@ -251,6 +255,8 @@ public class Mapa extends AppCompatActivity {
                             y=x*m+b;
                             img.setX(x);
                             img.setY(y);
+                            xAcumulada-=2;
+                            tv1.setText("ETA= "+(xAcumulada)/ETAfinal);
                         }
                         else{
                             timer.cancel();
@@ -263,6 +269,15 @@ public class Mapa extends AppCompatActivity {
                 });
             }
         },0,velocidad);
+    }
+    public void  calcularXacumulada(){
+        int pos=0;
+        xAcumulada=0;
+        while(pos<Ruta.length-1){
+           xAcumulada+=Math.abs(botones[Ruta[pos]].getX()-botones[Ruta[pos+1]].getX());
+           pos+=1;
+        }
+        
     }
     public void request(final int i){
         if (i==Ruta.length){
@@ -338,6 +353,8 @@ public class Mapa extends AppCompatActivity {
                         Toast.makeText(Mapa.this,
                                 response, Toast.LENGTH_LONG).show();
                         parsear(response);
+                        calcularXacumulada();
+                        Log.i("Carpooling", "aco: "+xAcumulada);
                         guardarPasajeros();
                         x=botones[Ruta[0]].getX();
                         y=botones[Ruta[0]].getY();
@@ -439,10 +456,11 @@ public class Mapa extends AppCompatActivity {
             }
 
             JsonArray TiemposDetails = details.getAsJsonArray("Tiempos");
-
+            ETAfinal=0;
             for (int i = 0; i < TiemposDetails.size(); i++) {
                 JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
                 Tiempos[i]=value.getAsInt();
+                ETAfinal+=Tiempos[i];
                 //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
             }
 
