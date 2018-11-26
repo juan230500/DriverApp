@@ -80,7 +80,10 @@ public class Asientos extends AppCompatActivity {
             this.finish();
             guardarAsientos();
         } else {
-            Toast.makeText(this, "No ha seleccionado la cantidad de asientos", Toast.LENGTH_LONG).show();
+            cantAsientos=0;
+            this.finish();
+            guardarAsientos();
+            Toast.makeText(this, "Ha elejido 0 asientos", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -88,7 +91,7 @@ public class Asientos extends AppCompatActivity {
      * Este método guarda la cantidad de asientos seleccionados en un fichero
      */
     public void guardarAsientos(){
-        Toast.makeText(this, "Asientos disponibles: ", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Asientos disponibles: "+cantAsientos, Toast.LENGTH_LONG).show();
         try {
             OutputStreamWriter archivo_wr = new OutputStreamWriter(openFileOutput("misasientos.txt", Activity.MODE_PRIVATE));
             archivo_wr.write(cantAsientos+"");
