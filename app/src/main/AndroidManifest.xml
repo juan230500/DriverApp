@@ -39,6 +39,7 @@
         <activity android:name=".ListaAmigos" />
         <activity android:name=".Asientos" />
         <activity android:name=".Calificar"></activity>
+        <activity android:name=".Top5"></activity>
     </application>
 
 </manifest>

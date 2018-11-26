@@ -161,7 +161,14 @@ public class MainActivity extends AppCompatActivity
             seleccionado2 = new Intent(this, CodigoBarras.class);
             haySeleccion= false;
             haySeleccion2= true;
-        } else if (id == R.id.nav_linkedin) {
+
+        }
+        else if (id == R.id.Top5) {
+            seleccionado2 = new Intent(this, Top5.class);
+            haySeleccion= false;
+            haySeleccion2= true;
+        }
+        else if (id == R.id.nav_linkedin) {
             seleccionado2 = new Intent(this, LoginLinkedIn.class);
             haySeleccion = false;
             haySeleccion2= true;
