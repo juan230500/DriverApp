@@ -38,6 +38,11 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * Esta calse corresponde a la pantalla en donde se mostraran todas las opciones a las que se puede acceder
+ * */
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Configuracion.OnFragmentInteractionListener {
 
@@ -63,32 +68,29 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        RequestQueue requestQueue=Volley.newRequestQueue(this);
-        String REST_URI  = "http://" + ip + ":8080/ServidorTEC/webapi/myresource/CalificacionPropia";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String REST_URI = "http://" + ip + ":8080/ServidorTEC/webapi/myresource/CalificacionPropia";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
-                new Response.Listener<String>()
-                {
+                new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Double num = (Double.parseDouble(response)) * 0.01;
-                        txtv = (TextView)findViewById(R.id.textViewCalif);
+                        txtv = (TextView) findViewById(R.id.textViewCalif);
                         txtv.setText(num.toString());
                     }
                 },
-                new Response.ErrorListener()
-                {
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(MainActivity.this,
-                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                                "Sent " + error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
-        ){
+        ) {
             @Override
-            protected Map<String, String> getParams()
-            {
-                Map<String, String>  params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("Carne", "" + carne);
 
                 return params;
@@ -106,7 +108,8 @@ public class MainActivity extends AppCompatActivity
             archivo_wr.write("20");
             archivo_wr.flush();
             archivo_wr.close();
-        } catch (IOException e){}
+        } catch (IOException e) {
+        }
     }
 
     @Override
@@ -136,7 +139,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_viaje1) {
             return true;
-        }else if (id == R.id.action_viaje2) {
+        } else if (id == R.id.action_viaje2) {
             return false;
         }
 
@@ -151,48 +154,46 @@ public class MainActivity extends AppCompatActivity
 
         Fragment seleccionado = null;
         Intent seleccionado2 = null;
-        Boolean haySeleccion= true;
-        Boolean haySeleccion2= false;
+        Boolean haySeleccion = true;
+        Boolean haySeleccion2 = false;
 
         if (id == R.id.nav_inicio) {
             seleccionado2 = new Intent(this, Mapa.class);
-            haySeleccion= false;
-            haySeleccion2= true;
-        }else if (id == R.id.nav_camera) {
+            haySeleccion = false;
+            haySeleccion2 = true;
+        } else if (id == R.id.nav_camera) {
             seleccionado2 = new Intent(this, CodigoBarras.class);
-            haySeleccion= false;
-            haySeleccion2= true;
+            haySeleccion = false;
+            haySeleccion2 = true;
 
-        }
-        else if (id == R.id.Top5) {
+        } else if (id == R.id.Top5) {
             seleccionado2 = new Intent(this, Top5.class);
-            haySeleccion= false;
-            haySeleccion2= true;
-        }
-        else if (id == R.id.nav_linkedin) {
+            haySeleccion = false;
+            haySeleccion2 = true;
+        } else if (id == R.id.nav_linkedin) {
             seleccionado2 = new Intent(this, LoginLinkedIn.class);
             haySeleccion = false;
-            haySeleccion2= true;
+            haySeleccion2 = true;
         } else if (id == R.id.nav_carne) {
             seleccionado2 = new Intent(this, RegistrarCarne.class);
             haySeleccion = false;
-            haySeleccion2= true;
+            haySeleccion2 = true;
         } else if (id == R.id.nav_manage) {
             seleccionado = new Configuracion();
             haySeleccion = true;
-            haySeleccion2= false;
-        }else if (id == R.id.nav_calificar) {
+            haySeleccion2 = false;
+        } else if (id == R.id.nav_calificar) {
             seleccionado2 = new Intent(this, Calificar.class);
-            haySeleccion= false;
-            haySeleccion2= true;
+            haySeleccion = false;
+            haySeleccion2 = true;
         } else if (id == R.id.nav_amigos) {
             seleccionado2 = new Intent(this, ListaAmigos.class);
             haySeleccion = false;
-            haySeleccion2= true;
+            haySeleccion2 = true;
         }
-        if(haySeleccion){
+        if (haySeleccion) {
             getSupportFragmentManager().beginTransaction().replace(R.id.Panel, seleccionado).commit();
-        } else if(haySeleccion2){
+        } else if (haySeleccion2) {
             startActivity(seleccionado2);
         }
 
@@ -202,6 +203,10 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Este método guarda la seleccion de viaje sin desvíos al fichero con el tipo de viaje
+     * @param view este corresponde al view de la aplicación
+     */
     public void guardarSD(View view){
         Toast.makeText(this, "Ha seleccionado viaje sin desvíos.", Toast.LENGTH_SHORT).show();
         Intent asientos = new Intent(this, Asientos.class);
@@ -213,6 +218,12 @@ public class MainActivity extends AppCompatActivity
             archivo_wr.close();
         } catch (IOException e){}
     }
+
+
+    /**
+     * Este método guarda la seleccion de viaje con amigos al fichero con el tipo de viaje
+     * @param view este corresponde al view de la aplicación
+     */
     public void guardarAmigos(View view){
         Toast.makeText(this, "Ha seleccionado viaje con amigos.", Toast.LENGTH_SHORT).show();
         Intent asientos = new Intent(this, Asientos.class);
@@ -243,6 +254,12 @@ public class MainActivity extends AppCompatActivity
             carne = br.readLine();
         } catch (IOException e){}
     }
+
+
+    /**
+     * Este método pide el carné al servidor y lo almacena en un text view, así como la calificación promedio
+     * @param view este corresponde al view de la aplicación
+     */
     public void refresh(View view){
         abrirCarne();
         RequestQueue requestQueue=Volley.newRequestQueue(this);

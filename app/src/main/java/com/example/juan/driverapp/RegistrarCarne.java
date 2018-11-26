@@ -26,6 +26,11 @@ import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+
+/**
+ * Esta clase correspnde a la pantalla en donde se registra el carné mediante la cámara
+ */
+
 public class RegistrarCarne extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private String codigoBarras;
@@ -34,6 +39,12 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
     private boolean registrado = false;
 
 
+
+
+    /**
+     * Este método cambia el view actual a la cámara con la cual se escaneará el carné
+     * @param view este corresponde al view de la aplicación
+     */
     public void Escanear(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             if (!registrado) {
@@ -59,6 +70,11 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
 
     }
 
+
+
+    /**
+     * Este método pide al usuario los permisos necesarios para el uso de la cámara como escaner
+     */
     public void pedirPermiso() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
@@ -82,12 +98,12 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, codigoPermiso);
         }
     }
-
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_carne);
     }
-
+    @Override
     public void handleResult(Result result) {
         scannerView.stopCamera();
         setContentView(R.layout.activity_registrar_carne);
@@ -131,6 +147,11 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
         }
     }
 
+
+
+    /**
+     * Este método guarda el carné escaneado en un fichero
+     */
     public void guardar(){
         registrar();
         Toast.makeText(this, "Se ha registrado el carné!", Toast.LENGTH_SHORT).show();
@@ -142,6 +163,11 @@ public class RegistrarCarne extends AppCompatActivity implements ZXingScannerVie
         } catch (IOException e){}
     }
 
+
+
+    /**
+     * Este método envia el carné escaneado al servidor
+     */
     public void registrar(){
         Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Carne";

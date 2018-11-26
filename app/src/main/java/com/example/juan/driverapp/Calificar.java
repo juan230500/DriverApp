@@ -20,7 +20,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Esta clase corresponde a la pantalla donde el conductor califica a los pasajeros después del viaje
+ */
 public class Calificar extends AppCompatActivity {
 
     private ArrayList<String> Pasajeros;
@@ -37,7 +39,10 @@ public class Calificar extends AppCompatActivity {
         calificacion = (RatingBar) findViewById(R.id.ratingBar);
     }
 
-
+    /**
+     * Este método se encarga de validar si ya se ha calificado o no el viaje para poder enviar al servidor
+     * @param view corresponde al view de la aplicacion
+     */
     public void enviarCalificacion(View view) {
         if (!califico) {
             Toast toast1 =
@@ -53,11 +58,18 @@ public class Calificar extends AppCompatActivity {
 
     }
 
+    /**
+     * Este método se encarga de regresar a la pantalla principal
+     * @param view este corresponde al view de la aplicación
+     */
     public void regresar(View view) {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
     }
 
+    /**
+     * Este método se encarga de enviar la calificación correspondiente a los carnes de los pasajeros en el servidor
+     */
     public void enviar() {
         i--;
         if (i<0)
@@ -93,6 +105,9 @@ public class Calificar extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Esta clase se encarga de abrir el fichero en donde se encuentran los carnes de los pasajeros que realizaron el último viaje
+     */
     public void abrirPasajeros(){
         Pasajeros = new ArrayList<String>();
         try {

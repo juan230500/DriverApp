@@ -20,6 +20,11 @@ import com.google.gson.Gson;
 
 import java.util.Arrays;
 
+
+/**
+ * Esta clase corresponde a la pantalla en la que se mostrara el top 5 de los estudiantes con más viajes realizados
+ */
+
 public class Top5 extends AppCompatActivity {
     private LinearLayout contenedor;
     private String ip = "192.168.100.12";
@@ -38,6 +43,12 @@ public class Top5 extends AppCompatActivity {
 
         getLista();
     }
+
+
+
+    /**
+     * Este método toma los datos del cada estudiante y los coloca en un text view para ser visualizados
+     */
     public void mostrarAmigos (){
         tv1 = (TextView)findViewById(R.id.tv1);
         lv1 = (ListView)findViewById(R.id.lv1);
@@ -51,6 +62,11 @@ public class Top5 extends AppCompatActivity {
             }
         });
     }
+
+
+    /**
+     * Este método solicita los datos necesarioa al servidor
+     */
     public void getLista (){
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
@@ -78,6 +94,12 @@ public class Top5 extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+
+
+    /**
+     * Este método hace parse a las respuestas obtenidas del servidor
+     * @param response corresponde al String en JSON que se desea parsear
+     */
     public void parsear(String response){
         Gson gson=new Gson();
         String [][] S = gson.fromJson(response, String [][].class);

@@ -30,6 +30,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Esta clase corresponde a la pantalla que muestra los amigos agregados previamente junto a su calificación
+ */
 public class ListaAmigos extends AppCompatActivity {
     private LinearLayout contenedor;
     private String carne;
@@ -47,10 +50,11 @@ public class ListaAmigos extends AppCompatActivity {
         lv1 = (ListView)findViewById(R.id.lv1);
         getLista();
         abrir();
-
-
-
     }
+
+    /**
+     * Este método muestra en pantalla todos los amigos agregados junto a sus calificaciones promedio
+     */
     public void mostrarAmigos (){
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_item_amigos, carnes);
         lv1.setAdapter(adapter);
@@ -65,6 +69,9 @@ public class ListaAmigos extends AppCompatActivity {
 
     }
 
+    /**
+     * Este método abre el archivo que contiene el carné del conductor registrado y lo guarda en un atributo "carne"
+     */
     public void abrir(){
         try {
             InputStreamReader archivo_rd = new InputStreamReader(openFileInput("micarne.txt"));
@@ -73,6 +80,9 @@ public class ListaAmigos extends AppCompatActivity {
         } catch (IOException e){}
     }
 
+    /**
+     * Este método se encarga de enviar la peticion de la lista de los amigos al servidor
+     */
     public void getLista (){
 
         RequestQueue requestQueue=Volley.newRequestQueue(this);
@@ -109,6 +119,12 @@ public class ListaAmigos extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
     }
+
+
+    /**
+     * Este método hace parse a las respuestas obtenidas del servidor
+     * @param response corresponde al String en JSON que se desea parsear
+     */
     public void parsear(String response){
         JsonParser parser = new JsonParser();
         JsonElement rootNode = parser.parse(response);

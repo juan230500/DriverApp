@@ -30,6 +30,9 @@ import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
+/**
+ * Esta clase corresponde a la pantalla en donde se agregan a los amigos mediante el lector de códigos de barra
+ */
 public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private String codigoBarras;
     private String conductorCarne;
@@ -38,6 +41,10 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     private boolean repetido = false;
 
 
+    /**
+     * Este método cambia el view a la camara con la cual se escaneará el código de barras
+     * @param view corresponde al view de la aplicación
+     */
     public void Escanear(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             this.scannerView = new ZXingScannerView(this);
@@ -50,6 +57,9 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
 
     }
 
+    /**
+     * Este método pide los permisos necesarios de uso de la cámara al usuario
+     */
     public void pedirPermiso() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
@@ -76,13 +86,14 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_codigo_barras);
         abrir();
     }
 
-
+    @Override
     public void handleResult(Result result) {
         scannerView.stopCamera();
         setContentView(R.layout.activity_codigo_barras);
@@ -127,6 +138,9 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
         }
     }
 
+    /**
+     * Este método almacena los carnés amigos escaneados en un fichero
+     */
     public void abrir(){
         String archivos []  = fileList();
         try {
@@ -137,7 +151,9 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
     }
 
 
-
+    /**
+     * Este método permite enviar los carnes de amigos correspondientes al carné de conductor registrado
+     */
     public void registrar(){
         Toast.makeText(this, "Amigo agregado!", Toast.LENGTH_LONG);
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/NuevoAmigo";

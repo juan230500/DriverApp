@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-
+/**
+ * Esta clase corresponde a la pantalla donde el conductor escoge la cantidad de asientos disponibles
+ */
 public class Asientos extends AppCompatActivity {
 
     private int cantAsientos;
@@ -24,6 +26,10 @@ public class Asientos extends AppCompatActivity {
         this.imgAsientos = (ImageView) findViewById(R.id.imgasientos);
     }
 
+    /**
+     * Este método define la cantidad de asientos a 1, además cambia la imagen que representa la cantidad de asientos escogidos
+     * @param view corresponde al view de la aplicación
+     */
     public void asiento1(View view){
         cantAsientos = 1;
         seleccionado = true;
@@ -31,6 +37,10 @@ public class Asientos extends AppCompatActivity {
         imgAsientos.setImageResource(imageResource);
     }
 
+    /**
+     * Este método define la cantidad de asientos a 2, además cambia la imagen que representa la cantidad de asientos escogidos
+     * @param view corresponde al view de la aplicación
+     */
     public void asiento2(View view){
         cantAsientos = 2;
         seleccionado = true;
@@ -38,6 +48,10 @@ public class Asientos extends AppCompatActivity {
         imgAsientos.setImageResource(imageResource);
     }
 
+    /**
+     * Este método define la cantidad de asientos a 3, además cambia la imagen que representa la cantidad de asientos escogidos
+     * @param view corresponde al view de la aplicación
+     */
     public void asiento3(View view){
         cantAsientos = 3;
         seleccionado = true;
@@ -45,6 +59,10 @@ public class Asientos extends AppCompatActivity {
         imgAsientos.setImageResource(imageResource);
     }
 
+    /**
+     * Este método define la cantidad de asientos a 4, además cambia la imagen que representa la cantidad de asientos escogidos
+     * @param view corresponde al view de la aplicación
+     */
     public void asiento4(View view){
         cantAsientos = 4;
         seleccionado = true;
@@ -53,6 +71,10 @@ public class Asientos extends AppCompatActivity {
         imgAsientos.setImageResource(imageResource);
     }
 
+    /**
+     * Este método valida si ya se ha seleccionado al menos una opción de la cantidad de asientos, luego manda los datos a guardar y finaliza la actividad
+     * @param view corresponde al view de la aplicación
+     */
     public void ok(View view) {
         if (seleccionado) {
             this.finish();
@@ -62,6 +84,9 @@ public class Asientos extends AppCompatActivity {
         }
     }
 
+    /**
+     * Este método guarda la cantidad de asientos seleccionados en un fichero
+     */
     public void guardarAsientos(){
         Toast.makeText(this, "Asientos disponibles: ", Toast.LENGTH_LONG).show();
         try {

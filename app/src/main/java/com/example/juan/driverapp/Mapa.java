@@ -194,6 +194,12 @@ public class Mapa extends AppCompatActivity {
         } catch (IOException e){}
     }
 
+
+
+    /**
+     * Este método
+     * @param view este corresponde al view de la aplicación
+     */
     public void giveMeConexiones(View view){
         if (!entrada.getText().equals("")){
             String valor=entrada.getText().toString();
@@ -390,6 +396,12 @@ public class Mapa extends AppCompatActivity {
         }
     }
 
+
+
+    /**
+     * Este método hace parse a los datos en json y los coloca en los arrays correspondientes
+     * @param response corresponde al string en json que se desea parsear
+     */
     public void parsear(String response){
         JsonParser parser = new JsonParser();
         JsonElement rootNode = parser.parse(response);
