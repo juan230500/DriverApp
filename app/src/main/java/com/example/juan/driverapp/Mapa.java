@@ -105,6 +105,7 @@ public class Mapa extends AppCompatActivity {
     private float xAcumulada;
     private float ETAfinal;
     private TextView tv1;
+    private TextView tv2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class Mapa extends AppCompatActivity {
         setContentView(R.layout.fragment_mapa);
 
         tv1=findViewById(R.id.ETA);
+        tv2=findViewById(R.id.Resumen);
         entrada=(EditText)findViewById(R.id.editText);
         img=(Button)findViewById(R.id.buttonCarro);
         Button0=(Button)findViewById(R.id.button0);
@@ -345,6 +347,12 @@ public class Mapa extends AppCompatActivity {
     }
 
     public void SentGPS(View view){
+        int n=Integer.parseInt(String.valueOf(entrada.getText()));
+        if (n<1 || n>30){
+            Toast.makeText(Mapa.this,
+                    "Punto de partida invalido", Toast.LENGTH_LONG).show();
+            return;
+        }
         String IsSolo;
         if (viaje.equals("0")){
             IsSolo="RutaSolo";
@@ -370,6 +378,10 @@ public class Mapa extends AppCompatActivity {
                         guardarPasajeros();
                         x=botones[Ruta[0]].getX();
                         y=botones[Ruta[0]].getY();
+                        tv2.setText("Resumen:"+Arrays.toString(Ruta));
+                        Toast.makeText(Mapa.this,
+                                "Pasajeros:  "+Arrays.toString(Pasajeros), Toast.LENGTH_LONG).show();
+
                         go2(1);
                     }
                 },
@@ -420,7 +432,6 @@ public class Mapa extends AppCompatActivity {
                 JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
                 Tiempos[i]=value.getAsInt();
                 ETAfinal+=Tiempos[i];
-                //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
             }
 
         }
@@ -455,7 +466,6 @@ public class Mapa extends AppCompatActivity {
             for (int i = 0; i < PosPasajerosDetails.size(); i++) {
                 JsonPrimitive value = PosPasajerosDetails.get(i).getAsJsonPrimitive();
                 PosPasajeros[i]=value.getAsString();
-                //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
             }
 
             JsonArray RutaDetails = details.getAsJsonArray("Ruta");
@@ -474,7 +484,6 @@ public class Mapa extends AppCompatActivity {
                 JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
                 Tiempos[i]=value.getAsInt();
                 ETAfinal+=Tiempos[i];
-                //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
             }
 
         }
