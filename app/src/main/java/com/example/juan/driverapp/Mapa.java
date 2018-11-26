@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -80,6 +83,7 @@ public class Mapa extends AppCompatActivity {
     private float yf;
     private float m;
     private float b;
+    private int sumador;
     private Button[]botones;
     int posicionLugar;
     private int posActual;;
@@ -97,11 +101,14 @@ public class Mapa extends AppCompatActivity {
     private String[] PosPasajeros;
     private int[] Ruta;
     private int[] Tiempos;
+    private int i=0;
+    private boolean FlagAnimacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_mapa);
+
         entrada=(EditText)findViewById(R.id.editText);
         img=(Button)findViewById(R.id.buttonCarro);
         Button0=(Button)findViewById(R.id.button0);
@@ -142,7 +149,6 @@ public class Mapa extends AppCompatActivity {
         botones=B;
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
-
         abrirCarne();
         if (registrado == false){
             finish();
@@ -228,9 +234,105 @@ public class Mapa extends AppCompatActivity {
             return 10-tiempo;
         }
         else{
+
             return -10+tiempo;
         }
     }
+
+    public void go2(final int i){
+        xf=botones[Ruta[i]].getX();
+        yf=botones[Ruta[i]].getY();
+        m=(yf-y)/(xf-x);
+        b=y-m*x;
+        if (x-xf<0){
+            sumador=2;
+        }
+        else{
+            sumador=-2;
+        }
+        double hipo=Math.sqrt((x-xf)*(x-xf)+(y-yf)*(y-yf));
+        int t=Tiempos[i-1]*1000;
+        int velocidad= (int) ((2*t)/hipo);
+        xf+=sumador*5;
+        Log.i("Mapa", hipo+"$");
+        //https://www.youtube.com/watch?v=UxbJKNjQWD8
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (Math.abs(x-xf)>10){
+                            x+=sumador;
+                            y=x*m+b;
+                            img.setX(x);
+                            img.setY(y);
+                        }
+                        else{
+                            timer.cancel();
+                            timer.purge();
+                            timer=new Timer();
+                            request(i+1);
+                        }
+                        Log.i("Mapa", "HOLA");
+                    }
+                });
+            }
+        },0,velocidad);
+    }
+    public void request(final int i){
+        if (i==Ruta.length){
+            return;
+        }
+        String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/ActualizarViaje";
+
+        RequestQueue requestQueue=Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, REST_URI,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+
+                        if (response.equals("1")){
+                            go2(i);
+                        }
+                        else{
+                            parsear2(response);
+                            Toast.makeText(Mapa.this,
+                                    response, Toast.LENGTH_LONG).show();
+                            Toast.makeText(Mapa.this,
+                                    Arrays.toString(Ruta), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Mapa.this,
+                                    Arrays.toString(Tiempos), Toast.LENGTH_LONG).show();
+                            go2(1);
+                        }
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Mapa.this,
+                                "Sent "+error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Pos", ""+Ruta[i-1]);
+                params.put("Carne",conductorCarne);
+
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
     public void go( final int lugares[],final int tiempos[]) {
         posicionLugar=0;
         posActual=lugares[posicionLugar];
@@ -240,11 +342,7 @@ public class Mapa extends AppCompatActivity {
         yf=botones[lugares[posicionLugar+1]].getY();
         m=(yf-y)/(xf-x);
         b=y-m*x;
-        Toast toast1 =
-                Toast.makeText(getApplicationContext(),
-                        "buton inicio"+botones[posActual].getText()+"el y es"+botones[posActual].getY(), Toast.LENGTH_SHORT);
 
-        toast1.show();
         //https://www.youtube.com/watch?v=UxbJKNjQWD8
         timer.schedule(new TimerTask() {
             @Override
@@ -337,6 +435,9 @@ public class Mapa extends AppCompatActivity {
                 Button19,Button20,Button21,Button22,Button23,Button24,Button25,Button26,Button27,
                 Button28,Button29,Button30};
 
+
+
+        //g(B[0].getX(),B[0].getY(),B[1].getX(),B[1].getY(),6);
         String IsSolo;
         if (viaje.equals("0")){
             IsSolo="RutaSolo";
@@ -359,7 +460,7 @@ public class Mapa extends AppCompatActivity {
                                 response, Toast.LENGTH_LONG).show();
                         parsear(response);
                         guardarPasajeros();
-                        go(Ruta,Tiempos);
+                        go2(1);
                     }
                 },
                 new Response.ErrorListener()
@@ -383,7 +484,35 @@ public class Mapa extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+    }
 
+    public void parsear2(String response){
+        JsonParser parser = new JsonParser();
+        JsonElement rootNode = parser.parse(response);
+
+
+        if (rootNode.isJsonObject()) {
+            JsonObject details = rootNode.getAsJsonObject();
+
+            JsonArray RutaDetails = details.getAsJsonArray("Ruta");
+
+            Ruta=new int[RutaDetails.size()];
+            Tiempos=new int[RutaDetails.size()];
+
+            for (int i = 0; i < RutaDetails.size(); i++) {
+                JsonPrimitive value = RutaDetails.get(i).getAsJsonPrimitive();
+                Ruta[i]=value.getAsInt();
+            }
+
+            JsonArray TiemposDetails = details.getAsJsonArray("Tiempos");
+
+            for (int i = 0; i < TiemposDetails.size(); i++) {
+                JsonPrimitive value = TiemposDetails.get(i).getAsJsonPrimitive();
+                Tiempos[i]=value.getAsInt();
+                //Toast.makeText(ListaAmigos.this, value.getAsString(), Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
 
     public void parsear(String response){
