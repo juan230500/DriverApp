@@ -149,7 +149,8 @@ public class CodigoBarras extends AppCompatActivity implements ZXingScannerView.
                 {
                     @Override
                     public void onResponse(String response) {
-                        // response
+                        Toast.makeText(CodigoBarras.this,
+                                "Sevidor: "+response, Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener()

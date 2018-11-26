@@ -101,8 +101,6 @@ public class Mapa extends AppCompatActivity {
     private String[] PosPasajeros;
     private int[] Ruta;
     private int[] Tiempos;
-    private int i=0;
-    private boolean FlagAnimacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +140,7 @@ public class Mapa extends AppCompatActivity {
         Button28=(Button)findViewById(R.id.button28);
         Button29=(Button)findViewById(R.id.button29);
         Button30=(Button)findViewById(R.id.button30);
-        Button []B={Button0,Button1,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9,
+        Button [] B={Button0,Button1,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9,
                 Button10,Button11,Button12,Button13,Button14,Button15,Button16,Button17,Button18,
                 Button19,Button20,Button21,Button22,Button23,Button24,Button25,Button26,Button27,
                 Button28,Button29,Button30};
@@ -150,13 +148,13 @@ public class Mapa extends AppCompatActivity {
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Mapa";
         RequestQueue requestQueue=Volley.newRequestQueue(this);
         abrirCarne();
-        if (registrado == false){
+        if (!registrado){
             finish();
             startActivity(new Intent(this, RegistrarCarne.class));
         }else {
             abrirViaje();
             abrirAsientos();
-            if (viajar == false) {
+            if (!viajar) {
                 finish();
             }else{
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, REST_URI,
@@ -195,12 +193,7 @@ public class Mapa extends AppCompatActivity {
             viajar=false;
         } catch (IOException e){}
     }
-    /*
-    1.Registrar residencia
-    2.Toast con caminos por el mapa
-    3.arrays con xy de los nodos
-    4.Bitacora XD
-     */
+
     public void giveMeConexiones(View view){
         if (!entrada.getText().equals("")){
             String valor=entrada.getText().toString();
@@ -222,22 +215,7 @@ public class Mapa extends AppCompatActivity {
                     "Porfa llene el espacio de texto", Toast.LENGTH_LONG).show();
         }
     }
-    //*****Aqui puse  mis  meetodpos super guapos/////
-    public void prueba(View view){
-        int Tiempos[]={1,9,3,0};
-        int Rutas[]={23,12,1,0};
-        go(Rutas,Tiempos);
-    }
-    public int calcularSumando(float posInicial,float posFinal,int tiempo){
 
-        if (posFinal>posInicial){
-            return 10-tiempo;
-        }
-        else{
-
-            return -10+tiempo;
-        }
-    }
 
     public void go2(final int i){
         xf=botones[Ruta[i]].getX();
@@ -250,16 +228,15 @@ public class Mapa extends AppCompatActivity {
         else{
             sumador=-2;
         }
+        xf+=sumador*5;
         double hipo=Math.sqrt((x-xf)*(x-xf)+(y-yf)*(y-yf));
         int t=Tiempos[i-1]*1000;
         int velocidad= (int) ((2*t)/hipo);
-        xf+=sumador*5;
-        Log.i("Mapa", hipo+"$");
+
         //https://www.youtube.com/watch?v=UxbJKNjQWD8
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -333,111 +310,7 @@ public class Mapa extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    public void go( final int lugares[],final int tiempos[]) {
-        posicionLugar=0;
-        posActual=lugares[posicionLugar];
-        y = botones[posActual].getY();
-        x=botones[posActual].getX();
-        xf=botones[lugares[posicionLugar+1]].getX();
-        yf=botones[lugares[posicionLugar+1]].getY();
-        m=(yf-y)/(xf-x);
-        b=y-m*x;
-
-        //https://www.youtube.com/watch?v=UxbJKNjQWD8
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (posicionLugar<lugares.length-1){
-                            if (Math.abs(xf-x)>10){
-                                x+=calcularSumando(x,xf,tiempos[posicionLugar]);
-                                y=x*m+b;
-                                img.setX(x);
-                                img.setY(y);
-                                PointF pointA = new PointF(img.getX()+25, img.getY()+25);
-                                PointF pointB = new PointF(xf, yf);
-                                linea=(LineView) findViewById(R.id.lineView);
-                                linea.setPointA(pointA);
-                                linea.setPointB(pointB);
-                                linea.draw();
-                            }
-                            else if(posicionLugar+1<lugares.length-1){
-                                PointF pointA = new PointF(0, 0);
-                                PointF pointB = new PointF(0, 0);
-                                linea=(LineView) findViewById(R.id.lineView);
-                                linea.setPointA(pointA);
-                                linea.setPointB(pointB);
-                                linea.draw();
-                                posicionLugar=posicionLugar+1;
-                                posActual=lugares[posicionLugar];
-                                y = botones[posActual].getY();
-                                x=botones[posActual].getX();
-                                xf=botones[lugares[posicionLugar+1]].getX();
-                                yf=botones[lugares[posicionLugar+1]].getY();
-                                m=(yf-y)/(xf-x);
-                                b=y-m*x;
-
-                            }
-                            else{
-                                PointF pointA = new PointF(0, 0);
-                                PointF pointB = new PointF(0, 0);
-                                linea=(LineView) findViewById(R.id.lineView);
-                                linea.setPointA(pointA);
-                                linea.setPointB(pointB);
-                                linea.draw();
-
-                            }
-
-                        }
-
-
-                    }
-                });
-            }
-        },0,50);
-    }
     public void SentGPS(View view){
-        Button0=(Button)findViewById(R.id.button0);
-        Button1=(Button)findViewById(R.id.button1);
-        Button2=(Button)findViewById(R.id.button2);
-        Button3=(Button)findViewById(R.id.button3);
-        Button4=(Button)findViewById(R.id.button4);
-        Button5=(Button)findViewById(R.id.button5);
-        Button6=(Button)findViewById(R.id.button6);
-        Button7=(Button)findViewById(R.id.button7);
-        Button8=(Button)findViewById(R.id.button8);
-        Button9=(Button)findViewById(R.id.button9);
-        Button10=(Button)findViewById(R.id.button10);
-        Button11=(Button)findViewById(R.id.button11);
-        Button12=(Button)findViewById(R.id.button12);
-        Button13=(Button)findViewById(R.id.button13);
-        Button14=(Button)findViewById(R.id.button14);
-        Button15=(Button)findViewById(R.id.button15);
-        Button16=(Button)findViewById(R.id.button16);
-        Button17=(Button)findViewById(R.id.button17);
-        Button18=(Button)findViewById(R.id.button18);
-        Button19=(Button)findViewById(R.id.button19);
-        Button20=(Button)findViewById(R.id.button20);
-        Button21=(Button)findViewById(R.id.button21);
-        Button22=(Button)findViewById(R.id.button22);
-        Button23=(Button)findViewById(R.id.button23);
-        Button24=(Button)findViewById(R.id.button24);
-        Button25=(Button)findViewById(R.id.button25);
-        Button26=(Button)findViewById(R.id.button26);
-        Button27=(Button)findViewById(R.id.button27);
-        Button28=(Button)findViewById(R.id.button28);
-        Button29=(Button)findViewById(R.id.button29);
-        Button30=(Button)findViewById(R.id.button30);
-        final Button[] B={Button0,Button1,Button2,Button3,Button4,Button5,Button6,Button7,Button8,Button9,
-                Button10,Button11,Button12,Button13,Button14,Button15,Button16,Button17,Button18,
-                Button19,Button20,Button21,Button22,Button23,Button24,Button25,Button26,Button27,
-                Button28,Button29,Button30};
-
-
-
-        //g(B[0].getX(),B[0].getY(),B[1].getX(),B[1].getY(),6);
         String IsSolo;
         if (viaje.equals("0")){
             IsSolo="RutaSolo";
@@ -445,7 +318,6 @@ public class Mapa extends AppCompatActivity {
         else{
             IsSolo="RutaAmigo";
         }
-
 
         String REST_URI  = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/"+IsSolo;
 
@@ -460,6 +332,8 @@ public class Mapa extends AppCompatActivity {
                                 response, Toast.LENGTH_LONG).show();
                         parsear(response);
                         guardarPasajeros();
+                        x=botones[Ruta[0]].getX();
+                        y=botones[Ruta[0]].getY();
                         go2(1);
                     }
                 },
@@ -568,11 +442,16 @@ public class Mapa extends AppCompatActivity {
             BufferedReader br = new BufferedReader(archivo_rd);
             viaje = br.readLine();
         } catch (IOException e){}
-        System.out.println(viaje.length());
-        if (viaje.equals("20")) {
-            viajar=false;
+        if (viaje==null){
             Toast.makeText(Mapa.this,
                     "Debe seleccionar la forma de viaje antes de continuar.", Toast.LENGTH_SHORT).show();
+            viajar=false;
+        }
+        else if (viaje.equals("20")) {
+            Toast.makeText(Mapa.this,
+                    "Debe seleccionar la forma de viaje antes de continuar.", Toast.LENGTH_SHORT).show();
+            viajar=false;
+
         }
         else{
             viajar=true;

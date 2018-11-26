@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
     private String viaje;
     private String asientos;
     private TextView txtv;
+    private TextView txtc;
     private String carne;
     private String ip = "192.168.100.12";
 
@@ -254,6 +255,8 @@ public class MainActivity extends AppCompatActivity
                     public void onResponse(String response) {
                         Double num = (Double.parseDouble(response)) * 0.01;
                         txtv = (TextView)findViewById(R.id.textViewCalif);
+                        txtc= findViewById(R.id.TextCarne);
+                        txtc.setText(carne);
                         txtv.setText(num.toString());
                     }
                 },

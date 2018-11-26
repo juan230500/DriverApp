@@ -333,7 +333,6 @@ public class LoginLinkedIn extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onAuthSuccess() {
                 Toast.makeText(getApplicationContext(),"inicio de sesión",Toast.LENGTH_LONG).show();
-                Go();
             }
 
             @Override
@@ -352,11 +351,6 @@ public class LoginLinkedIn extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this,requestCode,resultCode,data);
-    }
-
-    public void Go(){
-        Intent i=new Intent(this,Main2Activity.class);
-        startActivity(i);
     }
 }
 

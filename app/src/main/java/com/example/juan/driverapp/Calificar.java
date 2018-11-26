@@ -62,7 +62,6 @@ public class Calificar extends AppCompatActivity {
         i--;
         if (i<0)
             return;
-        Toast.makeText(this, "Ya se envio una calificacion!", Toast.LENGTH_LONG);
         String REST_URI = "http://192.168.100.12:8080/ServidorTEC/webapi/myresource/Calificar";
 
 
